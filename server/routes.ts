@@ -248,5 +248,308 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Setup file upload middleware
+  const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: {
+      fileSize: 50 * 1024 * 1024, // 50MB file size limit
+    },
+  });
+
+  // IPFS Status endpoint
+  app.get("/api/ipfs/status", (req, res) => {
+    res.json({
+      configured: isIPFSConfigured(),
+      ready: isIPFSConfigured(), // In a real app, would check connection health
+    });
+  });
+
+  // IPFS Upload endpoint (text content)
+  app.post("/api/ipfs/upload/text", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    try {
+      if (!isIPFSConfigured()) {
+        return res.status(503).json({ error: "IPFS service not configured" });
+      }
+
+      const { content, contentType, fileName, description } = req.body;
+
+      if (!content) {
+        return res.status(400).json({ error: "Content is required" });
+      }
+
+      if (!contentType) {
+        return res.status(400).json({ error: "Content type is required" });
+      }
+
+      // Upload to IPFS
+      const cid = await uploadToIPFS(content);
+
+      // Store reference in database
+      const ipfsStorageRecord = await storage.createIpfsStorage({
+        cid,
+        contentType,
+        fileName: fileName || null,
+        fileSize: Buffer.byteLength(content, 'utf8'),
+        description: description || null,
+        userId: req.user.id
+      });
+
+      // Create activity entry for upload
+      await storage.createActivity({
+        userId: req.user.id,
+        modelId: req.body.modelId || 1, // Default to the first model if not specified
+        action: "uploaded_to_ipfs",
+        description: `Uploaded ${contentType} content to IPFS`,
+        relatedCid: cid
+      });
+
+      res.status(201).json({
+        ...ipfsStorageRecord,
+        gatewayUrl: getIPFSGatewayUrl(cid)
+      });
+    } catch (error) {
+      console.error("IPFS upload error:", error);
+      res.status(500).json({ 
+        error: "Failed to upload to IPFS",
+        details: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+
+  // IPFS Upload file endpoint
+  app.post("/api/ipfs/upload/file", upload.single('file'), async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    try {
+      if (!isIPFSConfigured()) {
+        return res.status(503).json({ error: "IPFS service not configured" });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+
+      const { contentType, description } = req.body;
+      
+      if (!contentType) {
+        return res.status(400).json({ error: "Content type is required" });
+      }
+
+      // Upload to IPFS
+      const cid = await uploadToIPFS(req.file.buffer);
+
+      // Store reference in database
+      const ipfsStorageRecord = await storage.createIpfsStorage({
+        cid,
+        contentType,
+        fileName: req.file.originalname,
+        fileSize: req.file.size,
+        description: description || null,
+        userId: req.user.id
+      });
+
+      // Create activity entry for upload
+      await storage.createActivity({
+        userId: req.user.id,
+        modelId: req.body.modelId || 1, // Default to the first model if not specified
+        action: "uploaded_to_ipfs",
+        description: `Uploaded ${contentType} file to IPFS: ${req.file.originalname}`,
+        relatedCid: cid
+      });
+
+      res.status(201).json({
+        ...ipfsStorageRecord,
+        gatewayUrl: getIPFSGatewayUrl(cid)
+      });
+    } catch (error) {
+      console.error("IPFS file upload error:", error);
+      res.status(500).json({ 
+        error: "Failed to upload file to IPFS",
+        details: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+
+  // IPFS Get content endpoint
+  app.get("/api/ipfs/content/:cid", async (req, res) => {
+    try {
+      if (!isIPFSConfigured()) {
+        return res.status(503).json({ error: "IPFS service not configured" });
+      }
+
+      const { cid } = req.params;
+
+      // Get IPFS storage record to determine content type
+      const ipfsRecord = await storage.getIpfsStorageByCid(cid);
+      
+      let content;
+      try {
+        content = await getFromIPFS(cid);
+      } catch (error) {
+        return res.status(404).json({ error: "Content not found on IPFS" });
+      }
+
+      if (ipfsRecord && ipfsRecord.contentType) {
+        // If it's a file that should be downloaded
+        if (['model', 'data', 'weights'].includes(ipfsRecord.contentType)) {
+          res.setHeader('Content-Disposition', `attachment; filename="${ipfsRecord.fileName || cid}"`);
+        }
+      }
+
+      res.send(content);
+    } catch (error) {
+      console.error("IPFS content retrieval error:", error);
+      res.status(500).json({ 
+        error: "Failed to retrieve content from IPFS",
+        details: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+
+  // IPFS Pin content endpoint
+  app.post("/api/ipfs/pin/:cid", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    try {
+      if (!isIPFSConfigured()) {
+        return res.status(503).json({ error: "IPFS service not configured" });
+      }
+
+      const { cid } = req.params;
+
+      // Check if content exists
+      const ipfsRecord = await storage.getIpfsStorageByCid(cid);
+      if (!ipfsRecord) {
+        return res.status(404).json({ error: "IPFS record not found" });
+      }
+
+      // Pin the content
+      const pinned = await pinToIPFS(cid);
+      if (!pinned) {
+        return res.status(500).json({ error: "Failed to pin content" });
+      }
+
+      // Update storage record
+      const updatedRecord = await storage.updateIpfsStoragePinStatus(cid, true);
+
+      res.json({ 
+        success: true, 
+        pinned: true,
+        record: updatedRecord
+      });
+    } catch (error) {
+      console.error("IPFS pin error:", error);
+      res.status(500).json({ 
+        error: "Failed to pin content on IPFS",
+        details: error instanceof Error ? error.message : String(error)
+      });
+    }
+  });
+
+  // IPFS storage records endpoint
+  app.get("/api/ipfs/storage", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    try {
+      const records = await storage.getIpfsStorageByUser(req.user.id);
+      
+      // Add gateway URLs to each record
+      const recordsWithUrls = records.map(record => ({
+        ...record,
+        gatewayUrl: getIPFSGatewayUrl(record.cid)
+      }));
+
+      res.json(recordsWithUrls);
+    } catch (error) {
+      console.error("IPFS storage records error:", error);
+      res.status(500).json({ error: "Failed to fetch IPFS storage records" });
+    }
+  });
+
+  // Dataset endpoints
+  app.post("/api/datasets", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    try {
+      // Validate dataset data
+      const datasetData = insertDatasetSchema.parse({
+        ...req.body,
+        userId: req.user.id
+      });
+
+      // Create dataset record
+      const dataset = await storage.createDataset(datasetData);
+
+      // Create activity for dataset creation
+      await storage.createActivity({
+        userId: req.user.id,
+        modelId: req.body.modelId || 1,
+        action: "created_dataset",
+        description: `Created dataset: ${dataset.name}`,
+        relatedCid: dataset.dataCid
+      });
+
+      res.status(201).json(dataset);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ error: error.errors });
+      }
+      console.error("Dataset creation error:", error);
+      res.status(500).json({ error: "Failed to create dataset" });
+    }
+  });
+
+  app.get("/api/datasets/user", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ error: "Not authenticated" });
+    }
+
+    try {
+      const datasets = await storage.getDatasetsByUser(req.user.id);
+      res.json(datasets);
+    } catch (error) {
+      console.error("Dataset retrieval error:", error);
+      res.status(500).json({ error: "Failed to fetch datasets" });
+    }
+  });
+
+  app.get("/api/datasets/:id", async (req, res) => {
+    try {
+      const datasetId = parseInt(req.params.id);
+      const dataset = await storage.getDataset(datasetId);
+      
+      if (!dataset) {
+        return res.status(404).json({ error: "Dataset not found" });
+      }
+      
+      res.json({
+        ...dataset,
+        gatewayUrl: getIPFSGatewayUrl(dataset.dataCid)
+      });
+    } catch (error) {
+      console.error("Dataset retrieval error:", error);
+      res.status(500).json({ error: "Failed to fetch dataset" });
+    }
+  });
+
+  // Environment endpoint for client configuration
+  app.get("/api/environment", (req, res) => {
+    res.json({
+      ipfsConfigured: isIPFSConfigured()
+    });
+  });
+
   return httpServer;
 }

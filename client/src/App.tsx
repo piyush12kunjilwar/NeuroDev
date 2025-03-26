@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "./hooks/use-auth";
 import { ModelProvider } from "./hooks/use-model";
 import { ContributionsProvider } from "./hooks/use-contributions";
+import { IpfsProvider } from "./hooks/use-ipfs";
 import { ProtectedRoute } from "./lib/protected-route";
 
 import HomePage from "@/pages/home-page";
@@ -27,8 +28,10 @@ function App() {
       <AuthProvider>
         <ModelProvider>
           <ContributionsProvider>
-            <Router />
-            <Toaster />
+            <IpfsProvider>
+              <Router />
+              <Toaster />
+            </IpfsProvider>
           </ContributionsProvider>
         </ModelProvider>
       </AuthProvider>
