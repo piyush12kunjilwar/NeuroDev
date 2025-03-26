@@ -9,11 +9,15 @@ import { ModelVisualization } from '@/components/ui/model-visualization';
 import { CodeView } from '@/components/ui/code-view';
 import { ContributionsList } from '@/components/dashboard/contributions-list';
 import { NetworkGraph } from '@/components/ui/network-graph';
+import { IpfsUpload } from '@/components/ipfs/ipfs-upload';
+import { IpfsFiles } from '@/components/ipfs/ipfs-files';
 import { Button } from '@/components/ui/button';
 import { useModel } from '@/hooks/use-model';
 import { useAuth } from '@/hooks/use-auth';
+import { useIpfs } from '@/hooks/use-ipfs';
 import { useQuery } from '@tanstack/react-query';
-import { Loader2 } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Loader2, Database, Upload } from 'lucide-react';
 
 export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -241,6 +245,38 @@ export default function HomePage() {
                   limit={3}
                   showViewAll={true}
                 />
+              </div>
+              
+              {/* Decentralized Storage Section */}
+              <div className="mt-8">
+                <h2 className="text-xl font-heading font-medium text-gray-900 mb-4">
+                  Decentralized Storage (IPFS)
+                </h2>
+                
+                <div className="bg-white shadow rounded-lg overflow-hidden">
+                  <Tabs defaultValue="files" className="w-full">
+                    <div className="px-6 pt-6">
+                      <TabsList className="grid w-full grid-cols-2">
+                        <TabsTrigger value="files" className="flex items-center">
+                          <Database className="h-4 w-4 mr-2" />
+                          My Files
+                        </TabsTrigger>
+                        <TabsTrigger value="upload" className="flex items-center">
+                          <Upload className="h-4 w-4 mr-2" />
+                          Upload
+                        </TabsTrigger>
+                      </TabsList>
+                    </div>
+                    
+                    <TabsContent value="files" className="p-6 pt-4">
+                      <IpfsFiles />
+                    </TabsContent>
+                    
+                    <TabsContent value="upload" className="p-6 pt-4">
+                      <IpfsUpload />
+                    </TabsContent>
+                  </Tabs>
+                </div>
               </div>
               
               {/* Join Compute Network */}

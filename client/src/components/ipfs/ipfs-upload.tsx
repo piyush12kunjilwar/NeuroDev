@@ -315,25 +315,22 @@ export function IpfsUpload() {
         {renderUploadProgress()}
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Tabs.Context>
-          {({ value }) => (
-            value === "text" ? (
-              <Button 
-                onClick={handleTextUpload}
-                disabled={!textForm.content || uploadProgress.status === 'uploading'}
-              >
-                Upload Text
-              </Button>
-            ) : (
-              <Button 
-                onClick={handleFileUpload}
-                disabled={!selectedFile || uploadProgress.status === 'uploading'}
-              >
-                Upload File
-              </Button>
-            )
-          )}
-        </Tabs.Context>
+        <TabsContent value="text" className="mt-0 p-0">
+          <Button 
+            onClick={handleTextUpload}
+            disabled={!textForm.content || uploadProgress.status === 'uploading'}
+          >
+            Upload Text
+          </Button>
+        </TabsContent>
+        <TabsContent value="file" className="mt-0 p-0">
+          <Button 
+            onClick={handleFileUpload}
+            disabled={!selectedFile || uploadProgress.status === 'uploading'}
+          >
+            Upload File
+          </Button>
+        </TabsContent>
       </CardFooter>
     </Card>
   );
