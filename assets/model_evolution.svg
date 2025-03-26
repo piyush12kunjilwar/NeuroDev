@@ -1,0 +1,113 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8fafc" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#1e293b">NeuroNexus Model Evolution Process</text>
+  
+  <!-- Graph -->
+  <!-- X and Y axis -->
+  <line x1="100" y1="500" x2="700" y2="500" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="100" y1="500" x2="100" y2="150" stroke="#94a3b8" stroke-width="2"/>
+  
+  <!-- X axis labels -->
+  <text x="100" y="525" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">0</text>
+  <text x="250" y="525" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">25</text>
+  <text x="400" y="525" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">50</text>
+  <text x="550" y="525" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">75</text>
+  <text x="700" y="525" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">100</text>
+  <text x="400" y="550" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#64748b">Training Steps</text>
+  
+  <!-- Y axis labels -->
+  <text x="80" y="500" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#64748b">50%</text>
+  <text x="80" y="400" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#64748b">70%</text>
+  <text x="80" y="300" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#64748b">80%</text>
+  <text x="80" y="200" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#64748b">90%</text>
+  <text x="80" y="150" font-family="Arial, sans-serif" font-size="12" text-anchor="end" fill="#64748b">95%</text>
+  <text x="50" y="325" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#64748b" transform="rotate(-90, 50, 325)">Accuracy</text>
+  
+  <!-- Accuracy line -->
+  <polyline 
+    points="
+      100,480
+      150,470
+      200,450
+      250,420
+      300,380
+      350,350
+      400,320
+      450,290
+      500,260
+      550,230
+      600,210
+      650,190
+      700,180
+    "
+    fill="none" stroke="#4f46e5" stroke-width="3"
+  />
+  
+  <!-- Contribution markers -->
+  <circle cx="200" cy="450" r="8" fill="#ef4444"/>
+  <text x="200" y="435" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#ef4444">Data</text>
+  
+  <circle cx="350" cy="350" r="8" fill="#4f46e5"/>
+  <text x="350" y="335" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#4f46e5">Code</text>
+  
+  <circle cx="500" cy="260" r="8" fill="#8b5cf6"/>
+  <text x="500" y="245" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#8b5cf6">Hyperparams</text>
+  
+  <circle cx="650" cy="190" r="8" fill="#10b981"/>
+  <text x="650" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#10b981">Compute</text>
+  
+  <!-- Contribution Flow -->
+  <rect x="150" y="80" width="500" height="60" rx="30" ry="30" fill="#e2e8f0"/>
+  
+  <!-- Contribution Types in Flow -->
+  <circle cx="200" cy="110" r="20" fill="#ef4444"/>
+  <text x="200" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">1</text>
+  
+  <!-- Arrow -->
+  <line x1="220" y1="110" x2="250" y2="110" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <circle cx="280" cy="110" r="20" fill="#4f46e5"/>
+  <text x="280" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">2</text>
+  
+  <!-- Arrow -->
+  <line x1="300" y1="110" x2="330" y2="110" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <circle cx="360" cy="110" r="20" fill="#8b5cf6"/>
+  <text x="360" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">3</text>
+  
+  <!-- Arrow -->
+  <line x1="380" y1="110" x2="410" y2="110" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <circle cx="440" cy="110" r="20" fill="#10b981"/>
+  <text x="440" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">4</text>
+  
+  <!-- Arrow -->
+  <line x1="460" y1="110" x2="490" y2="110" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <circle cx="520" cy="110" r="20" fill="#f59e0b"/>
+  <text x="520" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">5</text>
+  
+  <!-- Arrow -->
+  <line x1="540" y1="110" x2="570" y2="110" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowhead)"/>
+  
+  <circle cx="600" cy="110" r="20" fill="#0ea5e9"/>
+  <text x="600" y="115" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">6</text>
+  
+  <!-- Legend for flow -->
+  <text x="170" y="570" font-family="Arial, sans-serif" font-size="12" fill="#ef4444">1. Data Collection</text>
+  <text x="300" y="570" font-family="Arial, sans-serif" font-size="12" fill="#4f46e5">2. Code Contribution</text>
+  <text x="435" y="570" font-family="Arial, sans-serif" font-size="12" fill="#8b5cf6">3. Parameter Tuning</text>
+  <text x="560" y="570" font-family="Arial, sans-serif" font-size="12" fill="#10b981">4. Compute Training</text>
+  <text x="170" y="590" font-family="Arial, sans-serif" font-size="12" fill="#f59e0b">5. Performance Evaluation</text>
+  <text x="350" y="590" font-family="Arial, sans-serif" font-size="12" fill="#0ea5e9">6. Token Distribution</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>

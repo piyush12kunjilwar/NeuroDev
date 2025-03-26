@@ -2,10 +2,13 @@ import {
   users, type User, type InsertUser,
   contributions, type Contribution, type InsertContribution,
   models, type Model, type InsertModel,
-  activities, type Activity, type InsertActivity
+  activities, type Activity, type InsertActivity,
+  ipfsStorage, type IpfsStorage, type InsertIpfsStorage,
+  datasets, type Dataset, type InsertDataset
 } from "@shared/schema";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import { SessionStore } from "express-session";
 
 const MemoryStore = createMemoryStore(session);
 
@@ -16,6 +19,7 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   updateUserTokens(userId: number, tokens: number): Promise<User | undefined>;
   setComputeProvider(userId: number, isProvider: boolean): Promise<User | undefined>;
+  updateUserProfile(userId: number, profileImageCid: string): Promise<User | undefined>;
   
   // Contribution-related methods
   getContribution(id: number): Promise<Contribution | undefined>;
@@ -30,13 +34,27 @@ export interface IStorage {
   getAllModels(): Promise<Model[]>;
   createModel(model: InsertModel): Promise<Model>;
   updateModel(id: number, updatedModel: Partial<Model>): Promise<Model | undefined>;
+  updateModelCode(modelId: number, code: string, codeCid: string): Promise<Model | undefined>;
+  updateModelWeights(modelId: number, weightsCid: string): Promise<Model | undefined>;
   
   // Activity-related methods
   getActivities(modelId: number, limit?: number): Promise<Activity[]>;
   createActivity(activity: InsertActivity): Promise<Activity>;
   
+  // IPFS storage methods
+  getIpfsStorage(id: number): Promise<IpfsStorage | undefined>;
+  getIpfsStorageByCid(cid: string): Promise<IpfsStorage | undefined>;
+  getIpfsStorageByUser(userId: number): Promise<IpfsStorage[]>;
+  createIpfsStorage(storage: InsertIpfsStorage): Promise<IpfsStorage>;
+  updateIpfsStoragePinStatus(cid: string, pinned: boolean): Promise<IpfsStorage | undefined>;
+  
+  // Dataset methods
+  getDataset(id: number): Promise<Dataset | undefined>;
+  getDatasetsByUser(userId: number): Promise<Dataset[]>;
+  createDataset(dataset: InsertDataset): Promise<Dataset>;
+  
   // Session store
-  sessionStore: session.SessionStore;
+  sessionStore: SessionStore;
 }
 
 export class MemStorage implements IStorage {
@@ -44,23 +62,31 @@ export class MemStorage implements IStorage {
   private _contributions: Map<number, Contribution>;
   private _models: Map<number, Model>;
   private _activities: Map<number, Activity>;
-  sessionStore: session.SessionStore;
+  private _ipfsStorage: Map<number, IpfsStorage>;
+  private _datasets: Map<number, Dataset>;
+  sessionStore: SessionStore;
   
   private _userIdCounter: number;
   private _contributionIdCounter: number;
   private _modelIdCounter: number;
   private _activityIdCounter: number;
+  private _ipfsStorageIdCounter: number;
+  private _datasetIdCounter: number;
   
   constructor() {
     this._users = new Map();
     this._contributions = new Map();
     this._models = new Map();
     this._activities = new Map();
+    this._ipfsStorage = new Map();
+    this._datasets = new Map();
     
     this._userIdCounter = 1;
     this._contributionIdCounter = 1;
     this._modelIdCounter = 1;
     this._activityIdCounter = 1;
+    this._ipfsStorageIdCounter = 1;
+    this._datasetIdCounter = 1;
     
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000 // prune expired entries every 24h
@@ -134,7 +160,13 @@ def train(model, device, train_loader, optimizer, epoch):
   
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this._userIdCounter++;
-    const user: User = { ...insertUser, id, tokens: 0, computeProvider: false };
+    const user: User = { 
+      ...insertUser, 
+      id, 
+      tokens: 0, 
+      computeProvider: false,
+      profileImageCid: null
+    };
     this._users.set(id, user);
     return user;
   }
@@ -153,6 +185,15 @@ def train(model, device, train_loader, optimizer, epoch):
     if (!user) return undefined;
     
     const updatedUser = { ...user, computeProvider: isProvider };
+    this._users.set(userId, updatedUser);
+    return updatedUser;
+  }
+  
+  async updateUserProfile(userId: number, profileImageCid: string): Promise<User | undefined> {
+    const user = await this.getUser(userId);
+    if (!user) return undefined;
+    
+    const updatedUser = { ...user, profileImageCid };
     this._users.set(userId, updatedUser);
     return updatedUser;
   }
@@ -188,7 +229,10 @@ def train(model, device, train_loader, optimizer, epoch):
       id, 
       status: "pending", 
       timestamp,
-      reward: null
+      reward: null,
+      code: insertContribution.code || null,
+      dataCid: insertContribution.dataCid || null,
+      codeCid: insertContribution.codeCid || null
     };
     
     this._contributions.set(id, contribution);
@@ -227,7 +271,14 @@ def train(model, device, train_loader, optimizer, epoch):
   async createModel(insertModel: InsertModel): Promise<Model> {
     const id = this._modelIdCounter++;
     const lastUpdated = new Date();
-    const model: Model = { ...insertModel, id, lastUpdated };
+    const model: Model = { 
+      ...insertModel, 
+      id, 
+      lastUpdated,
+      codeCid: insertModel.codeCid || null,
+      weightsCid: insertModel.weightsCid || null,
+      previousAccuracy: insertModel.previousAccuracy || null
+    };
     
     this._models.set(id, model);
     return model;
@@ -247,6 +298,35 @@ def train(model, device, train_loader, optimizer, epoch):
     return newModel;
   }
   
+  async updateModelCode(modelId: number, code: string, codeCid: string): Promise<Model | undefined> {
+    const model = await this.getModel(modelId);
+    if (!model) return undefined;
+    
+    const updatedModel: Model = {
+      ...model,
+      code,
+      codeCid,
+      lastUpdated: new Date()
+    };
+    
+    this._models.set(modelId, updatedModel);
+    return updatedModel;
+  }
+  
+  async updateModelWeights(modelId: number, weightsCid: string): Promise<Model | undefined> {
+    const model = await this.getModel(modelId);
+    if (!model) return undefined;
+    
+    const updatedModel: Model = {
+      ...model,
+      weightsCid,
+      lastUpdated: new Date()
+    };
+    
+    this._models.set(modelId, updatedModel);
+    return updatedModel;
+  }
+  
   // Activity-related methods
   async getActivities(modelId: number, limit?: number): Promise<Activity[]> {
     const activities = Array.from(this._activities.values())
@@ -259,10 +339,87 @@ def train(model, device, train_loader, optimizer, epoch):
   async createActivity(insertActivity: InsertActivity): Promise<Activity> {
     const id = this._activityIdCounter++;
     const timestamp = new Date();
-    const activity: Activity = { ...insertActivity, id, timestamp };
+    const activity: Activity = { 
+      ...insertActivity, 
+      id, 
+      timestamp,
+      metadata: insertActivity.metadata || {},
+      userId: insertActivity.userId || null,
+      relatedCid: insertActivity.relatedCid || null
+    };
     
     this._activities.set(id, activity);
     return activity;
+  }
+  
+  // IPFS Storage methods
+  async getIpfsStorage(id: number): Promise<IpfsStorage | undefined> {
+    return this._ipfsStorage.get(id);
+  }
+  
+  async getIpfsStorageByCid(cid: string): Promise<IpfsStorage | undefined> {
+    return Array.from(this._ipfsStorage.values()).find(
+      (storage) => storage.cid === cid
+    );
+  }
+  
+  async getIpfsStorageByUser(userId: number): Promise<IpfsStorage[]> {
+    return Array.from(this._ipfsStorage.values()).filter(
+      (storage) => storage.userId === userId
+    );
+  }
+  
+  async createIpfsStorage(storage: InsertIpfsStorage): Promise<IpfsStorage> {
+    const id = this._ipfsStorageIdCounter++;
+    const createdAt = new Date();
+    
+    const ipfsStorage: IpfsStorage = {
+      ...storage,
+      id,
+      createdAt,
+      pinned: false
+    };
+    
+    this._ipfsStorage.set(id, ipfsStorage);
+    return ipfsStorage;
+  }
+  
+  async updateIpfsStoragePinStatus(cid: string, pinned: boolean): Promise<IpfsStorage | undefined> {
+    const storage = await this.getIpfsStorageByCid(cid);
+    if (!storage) return undefined;
+    
+    const updatedStorage: IpfsStorage = {
+      ...storage,
+      pinned
+    };
+    
+    this._ipfsStorage.set(storage.id, updatedStorage);
+    return updatedStorage;
+  }
+  
+  // Dataset methods
+  async getDataset(id: number): Promise<Dataset | undefined> {
+    return this._datasets.get(id);
+  }
+  
+  async getDatasetsByUser(userId: number): Promise<Dataset[]> {
+    return Array.from(this._datasets.values()).filter(
+      (dataset) => dataset.userId === userId
+    );
+  }
+  
+  async createDataset(dataset: InsertDataset): Promise<Dataset> {
+    const id = this._datasetIdCounter++;
+    const createdAt = new Date();
+    
+    const newDataset: Dataset = {
+      ...dataset,
+      id,
+      createdAt
+    };
+    
+    this._datasets.set(id, newDataset);
+    return newDataset;
   }
 }
 

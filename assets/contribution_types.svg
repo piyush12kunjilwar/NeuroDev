@@ -1,0 +1,113 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8fafc" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#1e293b">NeuroNexus Contribution Types</text>
+  
+  <!-- Center point -->
+  <circle cx="400" cy="300" r="20" fill="#94a3b8"/>
+  <text x="400" y="305" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">AI Model</text>
+  
+  <!-- Code Contribution -->
+  <g transform="translate(0, 0)">
+    <circle cx="200" cy="150" r="80" fill="#4f46e5" fill-opacity="0.1" stroke="#4f46e5" stroke-width="2"/>
+    <text x="200" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#4f46e5">Code</text>
+    <text x="200" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Model Architecture</text>
+    <text x="200" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Algorithms</text>
+    
+    <!-- Line to center -->
+    <line x1="260" y1="200" x2="380" y2="280" stroke="#4f46e5" stroke-width="2"/>
+    
+    <!-- Code snippet -->
+    <rect x="120" y="200" width="160" height="70" rx="5" ry="5" fill="#ffffff" stroke="#4f46e5" stroke-width="1"/>
+    <text x="130" y="215" font-family="monospace" font-size="10" fill="#1e293b">def build_model():</text>
+    <text x="130" y="230" font-family="monospace" font-size="10" fill="#1e293b">  model = Sequential([</text>
+    <text x="130" y="245" font-family="monospace" font-size="10" fill="#1e293b">    Conv2D(32, 3),</text>
+    <text x="130" y="260" font-family="monospace" font-size="10" fill="#1e293b">    MaxPooling2D()</text>
+    <text x="130" y="275" font-family="monospace" font-size="10" fill="#1e293b">  ])</text>
+  </g>
+  
+  <!-- Compute Contribution -->
+  <g transform="translate(0, 0)">
+    <circle cx="600" cy="150" r="80" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-width="2"/>
+    <text x="600" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#10b981">Compute</text>
+    <text x="600" y="155" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">GPU Resources</text>
+    <text x="600" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Training Power</text>
+    
+    <!-- Line to center -->
+    <line x1="540" y1="200" x2="420" y2="280" stroke="#10b981" stroke-width="2"/>
+    
+    <!-- Compute representation -->
+    <rect x="550" y="200" width="100" height="50" rx="5" ry="5" fill="#ffffff" stroke="#10b981" stroke-width="1"/>
+    <rect x="560" y="210" width="80" height="10" rx="2" ry="2" fill="#10b981" fill-opacity="0.2"/>
+    <rect x="560" y="210" width="60" height="10" rx="2" ry="2" fill="#10b981" fill-opacity="0.6"/>
+    <rect x="560" y="225" width="80" height="10" rx="2" ry="2" fill="#10b981" fill-opacity="0.2"/>
+    <rect x="560" y="225" width="40" height="10" rx="2" ry="2" fill="#10b981" fill-opacity="0.6"/>
+    <text x="645" y="230" font-family="monospace" font-size="8" fill="#1e293b">75%</text>
+  </g>
+  
+  <!-- Data Contribution -->
+  <g transform="translate(0, 0)">
+    <circle cx="200" cy="450" r="80" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-width="2"/>
+    <text x="200" y="430" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ef4444">Data</text>
+    <text x="200" y="455" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Training Datasets</text>
+    <text x="200" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Labeled Examples</text>
+    
+    <!-- Line to center -->
+    <line x1="260" y1="400" x2="380" y2="320" stroke="#ef4444" stroke-width="2"/>
+    
+    <!-- Data representation -->
+    <rect x="150" y="350" width="100" height="60" rx="5" ry="5" fill="#ffffff" stroke="#ef4444" stroke-width="1"/>
+    <rect x="160" y="360" width="80" height="10" rx="0" ry="0" fill="#ef4444" fill-opacity="0.2"/>
+    <rect x="160" y="375" width="80" height="10" rx="0" ry="0" fill="#ef4444" fill-opacity="0.2"/>
+    <rect x="160" y="390" width="80" height="10" rx="0" ry="0" fill="#ef4444" fill-opacity="0.2"/>
+    <text x="170" y="368" font-family="monospace" font-size="8" fill="#1e293b">image1.jpg, 7</text>
+    <text x="170" y="383" font-family="monospace" font-size="8" fill="#1e293b">image2.jpg, 3</text>
+    <text x="170" y="398" font-family="monospace" font-size="8" fill="#1e293b">image3.jpg, 5</text>
+  </g>
+  
+  <!-- Hyperparameter Contribution -->
+  <g transform="translate(0, 0)">
+    <circle cx="600" cy="450" r="80" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="600" y="430" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#8b5cf6">Hyperparameters</text>
+    <text x="600" y="455" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Optimization Params</text>
+    <text x="600" y="475" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Learning Rate Tuning</text>
+    
+    <!-- Line to center -->
+    <line x1="540" y1="400" x2="420" y2="320" stroke="#8b5cf6" stroke-width="2"/>
+    
+    <!-- Hyperparameter representation -->
+    <rect x="550" y="350" width="100" height="70" rx="5" ry="5" fill="#ffffff" stroke="#8b5cf6" stroke-width="1"/>
+    <text x="560" y="365" font-family="monospace" font-size="10" fill="#1e293b">params = {</text>
+    <text x="560" y="380" font-family="monospace" font-size="10" fill="#1e293b">  'lr': 0.001,</text>
+    <text x="560" y="395" font-family="monospace" font-size="10" fill="#1e293b">  'batch': 64,</text>
+    <text x="560" y="410" font-family="monospace" font-size="10" fill="#1e293b">  'dropout': 0.3</text>
+    <text x="560" y="425" font-family="monospace" font-size="10" fill="#1e293b">}</text>
+  </g>
+  
+  <!-- Token rewards -->
+  <g transform="translate(0, 0)">
+    <circle cx="400" cy="300" r="120" fill="none" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5,5"/>
+    <circle cx="400" cy="300" r="180" fill="none" stroke="#f59e0b" stroke-width="1" stroke-dasharray="5,5"/>
+    
+    <!-- Rewards -->
+    <circle cx="200" cy="150" r="15" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+    <text x="200" y="155" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#f59e0b">5-20</text>
+    
+    <circle cx="600" cy="150" r="15" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+    <text x="600" y="155" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#f59e0b">1-5/hr</text>
+    
+    <circle cx="200" cy="450" r="15" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+    <text x="200" y="455" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#f59e0b">2-15</text>
+    
+    <circle cx="600" cy="450" r="15" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+    <text x="600" y="455" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#f59e0b">3-10</text>
+  </g>
+  
+  <!-- Legend -->
+  <rect x="250" y="530" width="300" height="40" rx="5" ry="5" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+  <circle cx="270" cy="550" r="10" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="1"/>
+  <text x="270" y="554" font-family="Arial, sans-serif" font-size="10" font-weight="bold" text-anchor="middle" fill="#f59e0b">NXS</text>
+  <text x="400" y="554" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Token Rewards (NXS) for Each Contribution Type</text>
+</svg>

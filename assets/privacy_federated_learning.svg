@@ -1,0 +1,82 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8fafc" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#1e293b">NeuroNexus Privacy-Preserving Federated Learning</text>
+  
+  <!-- Central server -->
+  <rect x="325" y="120" width="150" height="80" rx="5" ry="5" fill="#4f46e5" fill-opacity="0.1" stroke="#4f46e5" stroke-width="2"/>
+  <text x="400" y="160" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4f46e5">Central Server</text>
+  <text x="400" y="180" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Aggregates Model Updates</text>
+  
+  <!-- Client nodes -->
+  <circle cx="150" cy="300" r="70" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-width="2"/>
+  <text x="150" y="290" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#10b981">Client 1</text>
+  <text x="150" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Local Training</text>
+  
+  <circle cx="400" cy="400" r="70" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="390" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#10b981">Client 2</text>
+  <text x="400" y="410" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Local Training</text>
+  
+  <circle cx="650" cy="300" r="70" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-width="2"/>
+  <text x="650" y="290" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#10b981">Client 3</text>
+  <text x="650" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Local Training</text>
+  
+  <!-- Connection lines -->
+  <line x1="199" y1="247" x2="345" y2="190" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowheadUp)"/>
+  <line x1="345" y1="170" x2="199" y2="227" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowheadDown)"/>
+  
+  <line x1="429" y1="338" x2="399" y2="210" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowheadUp)"/>
+  <line x1="389" y1="210" x2="419" y2="338" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowheadDown)"/>
+  
+  <line x1="598" y1="247" x2="455" y2="190" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrowheadUp)"/>
+  <line x1="455" y1="170" x2="598" y2="227" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrowheadDown)"/>
+  
+  <!-- Privacy icons -->
+  <circle cx="272" cy="208" r="20" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+  <text x="272" y="213" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef4444">🔒</text>
+  
+  <circle cx="409" cy="274" r="20" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+  <text x="409" y="279" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef4444">🔒</text>
+  
+  <circle cx="527" cy="208" r="20" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+  <text x="527" y="213" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ef4444">🔒</text>
+  
+  <!-- Client data -->
+  <rect x="100" y="320" width="100" height="30" rx="5" ry="5" fill="#ffffff" stroke="#10b981" stroke-width="1"/>
+  <text x="150" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#10b981">Private Data</text>
+  
+  <rect x="350" y="420" width="100" height="30" rx="5" ry="5" fill="#ffffff" stroke="#10b981" stroke-width="1"/>
+  <text x="400" y="440" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#10b981">Private Data</text>
+  
+  <rect x="600" y="320" width="100" height="30" rx="5" ry="5" fill="#ffffff" stroke="#10b981" stroke-width="1"/>
+  <text x="650" y="340" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#10b981">Private Data</text>
+  
+  <!-- Privacy features box -->
+  <rect x="50" y="480" width="700" height="80" rx="8" ry="8" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-width="2"/>
+  <text x="400" y="510" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ef4444">Privacy Technologies</text>
+  
+  <!-- Privacy technologies -->
+  <rect x="80" y="530" width="150" height="20" rx="10" ry="10" fill="#ffffff" stroke="#ef4444" stroke-width="1"/>
+  <text x="155" y="545" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Homomorphic Encryption</text>
+  
+  <rect x="250" y="530" width="150" height="20" rx="10" ry="10" fill="#ffffff" stroke="#ef4444" stroke-width="1"/>
+  <text x="325" y="545" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Differential Privacy</text>
+  
+  <rect x="420" y="530" width="150" height="20" rx="10" ry="10" fill="#ffffff" stroke="#ef4444" stroke-width="1"/>
+  <text x="495" y="545" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Secure Aggregation</text>
+  
+  <rect x="590" y="530" width="130" height="20" rx="10" ry="10" fill="#ffffff" stroke="#ef4444" stroke-width="1"/>
+  <text x="655" y="545" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#1e293b">Federated Learning</text>
+  
+  <!-- Arrow marker definition -->
+  <defs>
+    <marker id="arrowheadUp" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrowheadDown" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="10 0, 0 3.5, 10 7" fill="#94a3b8"/>
+    </marker>
+  </defs>
+</svg>

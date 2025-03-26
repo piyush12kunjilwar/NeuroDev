@@ -1,0 +1,70 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8fafc" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#1e293b">NeuroNexus Token Reward System</text>
+  
+  <!-- Center coin icon -->
+  <circle cx="400" cy="220" r="100" fill="#f59e0b" fill-opacity="0.1" stroke="#f59e0b" stroke-width="2"/>
+  <circle cx="400" cy="220" r="80" fill="#f59e0b" fill-opacity="0.2" stroke="#f59e0b" stroke-width="1"/>
+  <text x="400" y="200" font-family="Arial, sans-serif" font-size="28" font-weight="bold" text-anchor="middle" fill="#f59e0b">NXS</text>
+  <text x="400" y="235" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#1e293b">Tokens</text>
+  <text x="400" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#64748b">Utility Token</text>
+  
+  <!-- Contribution Types -->
+  <!-- Code -->
+  <circle cx="150" cy="220" r="70" fill="#4f46e5" fill-opacity="0.1" stroke="#4f46e5" stroke-width="2"/>
+  <text x="150" y="200" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#4f46e5">Code</text>
+  <text x="150" y="225" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e293b">5-20 NXS</text>
+  <text x="150" y="245" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Model Architecture</text>
+  
+  <!-- Compute -->
+  <circle cx="400" cy="400" r="70" fill="#10b981" fill-opacity="0.1" stroke="#10b981" stroke-width="2"/>
+  <text x="400" y="380" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#10b981">Compute</text>
+  <text x="400" y="405" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e293b">1-5 NXS/hr</text>
+  <text x="400" y="425" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Processing Power</text>
+  
+  <!-- Data -->
+  <circle cx="650" cy="220" r="70" fill="#ef4444" fill-opacity="0.1" stroke="#ef4444" stroke-width="2"/>
+  <text x="650" y="200" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#ef4444">Data</text>
+  <text x="650" y="225" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e293b">2-15 NXS</text>
+  <text x="650" y="245" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Training Data</text>
+  
+  <!-- Hyperparameters -->
+  <circle cx="400" cy="100" r="70" fill="#8b5cf6" fill-opacity="0.1" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="400" y="80" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#8b5cf6">Hyperparameters</text>
+  <text x="400" y="105" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e293b">3-10 NXS</text>
+  <text x="400" y="125" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Parameter Tuning</text>
+  
+  <!-- Connecting lines -->
+  <line x1="220" y1="220" x2="300" y2="220" stroke="#64748b" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="500" y1="220" x2="580" y2="220" stroke="#64748b" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="400" y1="170" x2="400" y2="120" stroke="#64748b" stroke-width="2" stroke-dasharray="5,5"/>
+  <line x1="400" y1="270" x2="400" y2="330" stroke="#64748b" stroke-width="2" stroke-dasharray="5,5"/>
+  
+  <!-- Token Utility -->
+  <rect x="100" y="500" width="600" height="80" rx="8" ry="8" fill="#0ea5e9" fill-opacity="0.1" stroke="#0ea5e9" stroke-width="2"/>
+  <text x="400" y="530" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#0ea5e9">Token Utility</text>
+  
+  <!-- Utility icons -->
+  <circle cx="200" cy="560" r="20" fill="#ffffff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="200" y="565" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#0ea5e9">$</text>
+  <text x="200" y="590" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Exchange</text>
+  
+  <circle cx="300" cy="560" r="20" fill="#ffffff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="300" y="565" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0ea5e9">👑</text>
+  <text x="300" y="590" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Governance</text>
+  
+  <circle cx="400" cy="560" r="20" fill="#ffffff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="400" y="565" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0ea5e9">🔒</text>
+  <text x="400" y="590" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Staking</text>
+  
+  <circle cx="500" cy="560" r="20" fill="#ffffff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="500" y="565" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0ea5e9">📊</text>
+  <text x="500" y="590" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">Model Access</text>
+  
+  <circle cx="600" cy="560" r="20" fill="#ffffff" stroke="#0ea5e9" stroke-width="1"/>
+  <text x="600" y="565" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0ea5e9">🧠</text>
+  <text x="600" y="590" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#64748b">API Credits</text>
+</svg>

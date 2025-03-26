@@ -2,9 +2,23 @@ import type { Express, Request, Response } from "express";
 import { createServer, type Server } from "http";
 import { setupAuth } from "./auth";
 import { storage } from "./storage";
-import { insertContributionSchema, contributionTypeSchema } from "@shared/schema";
+import { 
+  insertContributionSchema, 
+  contributionTypeSchema, 
+  insertIpfsStorageSchema, 
+  ipfsContentTypeSchema,
+  insertDatasetSchema 
+} from "@shared/schema";
 import { WebSocketHandler } from "./websocket";
 import { mnistModel } from "./model";
+import { 
+  uploadToIPFS, 
+  getFromIPFS, 
+  pinToIPFS, 
+  getIPFSGatewayUrl, 
+  isIPFSConfigured 
+} from "./ipfs";
+import multer from "multer";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
